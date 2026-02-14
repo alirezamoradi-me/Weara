@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule } from '@nestjs/swagger';
+import swaggerConf from './configs/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,7 +22,10 @@ async function bootstrap() {
     whitelist: true,
     forbidNonWhitelisted: true,
     transform: true
-  }))
+  }));
+
+  const document = SwaggerModule.createDocument(app, swaggerConf);
+  SwaggerModule.setup("/docs", app, document);
 
   await app.listen(process.env.PORT ?? 3000);
 }
