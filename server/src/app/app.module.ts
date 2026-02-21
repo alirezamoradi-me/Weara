@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import database from 'src/configs/database.config';
 
+import UsersModule from 'src/users/users.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,7 +26,8 @@ import database from 'src/configs/database.config';
         autoLoadEntities: true,
         synchronize: true
       })
-    })
+    }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
